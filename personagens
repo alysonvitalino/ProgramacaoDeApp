@@ -1,0 +1,88 @@
+/* CRIAR UM PROJETO API "personagens"
+CRIAR UMA PASTA CHAMADA "models" dentro de "personagens"
+CRIAR UM OBJETO WEB API CONTROLLER VAZIO DENTRO DA PASTA "controllers" chamado "personagens"
+
+
+*/
+// CONTROLLER
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Personagens.Models;
+
+namespace Personagens.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class Personagens : ControllerBase
+    {
+        private static List<Personagem> personagens = new List<Personagem>
+        {
+            new Personagem
+            {
+                Id = 1,
+                Nome = "Peter",
+                Sobrenome = "Parker",
+                Fantasia = "Homem-aranha",
+                Local = "NY City"
+            },
+            new Personagem
+            {
+                Id = 2,
+                Nome = "Wade",
+                Sobrenome = "Wilson",
+                Fantasia = "Deadpool",
+                Local = "NY City"
+            },
+
+        };
+
+        [HttpGet]
+        public ActionResult<List<Personagem>> LerTodosPersonagens()
+
+        {
+            return Ok(personagens);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<Personagem> LerUnicoPersonagem(int id)
+        {
+            var unico = personagens.Find(x => x.Id == id);
+
+            if (unico is null)
+                return NotFound("Este personagem não foi encontrado");
+
+            return Ok(unico);
+        }
+
+        [HttpPost]
+        public ActionResult<List<Personagem>>
+
+            AddPersonagem(Personagem novo)
+        {
+            /*expressao ternaria
+            bool success = false;
+            int id = success ? 1 : 0;*/
+
+            if(novo.Id == 0 && personagens.Count > 0)
+                novo.Id = personagens[personagens.Count - 1].Id + 1;
+
+            personagens.Add(novo);
+            return Ok(personagens);
+
+        }
+    }
+}
+
+MODEL
+
+namespace Personagens.Models
+{
+    public class Personagem
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; } = string.Empty;
+        public string Sobrenome { get; set; } = string.Empty;
+        public string Fantasia { get; set; } = string.Empty;
+        public string Local { get; set; } = string.Empty;
+    }
+}

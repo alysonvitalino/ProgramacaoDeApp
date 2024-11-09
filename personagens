@@ -1,5 +1,6 @@
 /* CRIAR UM PROJETO API "personagens"
 CRIAR UMA PASTA CHAMADA "models" dentro de "personagens"
+CRIAR UMA CLASSE DENTRO DE "models" chamada "Personagem"
 CRIAR UM OBJETO WEB API CONTROLLER VAZIO DENTRO DA PASTA "controllers" chamado "personagens"
 
 
@@ -7,13 +8,13 @@ CRIAR UM OBJETO WEB API CONTROLLER VAZIO DENTRO DA PASTA "controllers" chamado "
 // CONTROLLER
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Personagens.Models;
+using personagens.Models;
 
-namespace Personagens.Controllers
+namespace personagens.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Personagens : ControllerBase
+    public class PersonagemController : ControllerBase
     {
         private static List<Personagem> personagens = new List<Personagem>
         {
@@ -31,7 +32,7 @@ namespace Personagens.Controllers
                 Nome = "Wade",
                 Sobrenome = "Wilson",
                 Fantasia = "Deadpool",
-                Local = "NY City"
+                Local = "Sorocaba"
             },
 
         };
@@ -46,7 +47,7 @@ namespace Personagens.Controllers
         [HttpGet("{id}")]
         public ActionResult<Personagem> LerUnicoPersonagem(int id)
         {
-            var unico = personagens.Find(x => x.Id == id);
+            var unico = personagens.Find(x => x.Id == id); //PROCURA UM PERSONAGEM PELO ID
 
             if (unico is null)
                 return NotFound("Este personagem não foi encontrado");
@@ -63,15 +64,87 @@ namespace Personagens.Controllers
             bool success = false;
             int id = success ? 1 : 0;*/
 
-            if(novo.Id == 0 && personagens.Count > 0)
+            if (novo.Id == 0 && personagens.Count > 0)
                 novo.Id = personagens[personagens.Count - 1].Id + 1;
 
             personagens.Add(novo);
             return Ok(personagens);
 
         }
+
+        [HttpPut("{id}")]
+        public ActionResult<List<Personagem>> AlterarPersonagem(int id, Personagem editar)
+        {
+            var pesquisa = personagens.Find(x => x.Id == id);
+
+            if (pesquisa is null)
+                return NotFound("Personagem não encontrado.");
+
+            pesquisa.Nome = editar.Nome == "" || editar.Nome == "string" ? pesquisa.Nome : editar.Nome ;
+            pesquisa.Sobrenome = editar.Sobrenome == "" || editar.Sobrenome == "string" ? pesquisa.Sobrenome : editar.Sobrenome;
+            pesquisa.Fantasia = editar.Fantasia == "" || editar.Fantasia == "string" ? pesquisa.Fantasia : editar.Fantasia;
+            pesquisa.Local = editar.Local == "" || editar.Local == "string" ? pesquisa.Local : editar.Local;
+
+            return Ok(pesquisa);
+        }
+
+
+        
+        [HttpDelete("{id}")]
+         public ActionResult DeletePersonagem(int id)
+        {
+            var deletar = personagens.Find(x => x.Id == id);
+
+            if (deletar is null)
+                return NotFound("Este personagem não foi encontrado.");
+
+            personagens.Remove(deletar);
+            return Ok("Personagem Removido com Sucesso!");
+
+
+        } 
+
+        [HttpGet("fantasia/{id}")]
+        public ActionResult FantasiaPorId(int id)
+        {
+            var fantasia = personagens.Find(x => x.Id == id); //PROCURA UM PERSONAGEM PELO ID
+
+            if (fantasia is null)
+                return NotFound("Este personagem não foi encontrado.");
+
+            return Ok(fantasia.Fantasia);
+        }
+
+        [HttpGet("local/{local}")]
+        public ActionResult<List<Personagem>> PersonagemPorLocal(string local)
+        {
+            var pesquisa = personagens.FindAll(x => x.Local == local); //PROCURA UM PERSONAGEM PELO LOCAL
+
+            if (pesquisa is null)
+                return NotFound($"Nenhum personagem vive em {local}.");
+
+            return Ok(pesquisa);
+        }
+
+        [HttpGet("especifico/{local}")]
+        public ActionResult<List<Personagem>> BuscaLocalEspecifico(string local)
+        {
+            var list = new List<Personagem>();
+            
+            foreach (var item in personagens)
+            {
+                if(item.Local.Contains(local)) //CONTAINS BUSCA TODAS AS PALAVRAS QUE CONTÉM O PEDIDO // STARTSWITH BUSCA TODAS QUE COMEÇAM
+                    list.Add(item);             // ENDSWITH BUSCA TODAS QUE TERMINAM
+            }
+
+            if (list is null)
+                return NotFound($"Nenhum personagem vive em {local}.");
+
+            return Ok(list);
+        }
     }
 }
+
 
 MODEL
 

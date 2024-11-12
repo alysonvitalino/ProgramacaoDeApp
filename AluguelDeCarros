@@ -79,5 +79,22 @@ namespace AluguelDeCarros.Controllers
 
             return Ok("Carro Disponível!");
         }
+
+        [HttpGet("id/{id}")]
+        public ActionResult DevolucaoCarro(int id)
+        {
+            var pesquisa = carros.Find(x => x.Id == id);
+
+            if (pesquisa == null)
+                return NotFound("Carro não encontrado.");
+
+            if (pesquisa.Alugado == true)
+            {
+                pesquisa.Alugado = false; 
+                return Ok("Carro Devolvido com Sucesso!");
+            }
+
+            return Ok("Carro não estava locado!");
+        }
     }
 }

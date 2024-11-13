@@ -1,20 +1,21 @@
-                //1 - COLOCAR O ID DO PRODUTO E DIMINUIR A QUANTIDADE, SE O ID NÃO EXISTE, MOSTRAR UMA MENSAGEM DE ERRO
-                //2 - LISTAR OS PRODUTOS COM A QUANTIDADE ATUALIZADA
-                //3 - ALTERAR A SENHA, PARA ALTERAR DEVE PEDIR A SENHA ANTIGA, SE ESTIVER INCORRETO DAR UM AVISO
-                //4 - PARA FECHAR O CAIXA DEVE SER INSERIDO A SENHA ATUAL, MOSTRAR A LISTA DE PRODUTOS
-                // COM A QUANTIDADE ATUALZIADA E DEPOIS DE 20 SEGUNDOS FINALIZAR O PROGRAMA
+//1 - COLOCAR O ID DO PRODUTO E DIMINUIR A QUANTIDADE, SE O ID NÃO EXISTE, MOSTRAR UMA MENSAGEM DE ERRO
+//2 - LISTAR OS PRODUTOS COM A QUANTIDADE ATUALIZADA
+//3 - ALTERAR A SENHA, PARA ALTERAR DEVE PEDIR A SENHA ANTIGA, SE ESTIVER INCORRETO DAR UM AVISO
+//4 - PARA FECHAR O CAIXA DEVE SER INSERIDO A SENHA ATUAL, MOSTRAR A LISTA DE PRODUTOS
+// COM A QUANTIDADE ATUALZIADA E DEPOIS DE 20 SEGUNDOS FINALIZAR O PROGRAMA
 
 using System.Collections.Generic;
 using System.Threading;
 using System;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 public class JUPITER
 {
     static List<Produto> listaProdutos = new List<Produto>();
 
     public static void Main()
-    {        
+    {
         string senha = "";
         bool produtos = false;
         while (true)
@@ -74,13 +75,11 @@ public class JUPITER
                 Console.WriteLine("[4] - Fechar Caixa");
 
                 int decisao = Convert.ToInt32(Console.ReadLine());
-//PERGUNTAR SOBRE CONVERT.TOINT32
-
+                
                 switch (decisao)
                 {
                     case 1:
-                        int a = 1;
-                        VenderProduto(a);
+                        VenderProduto();
                         break;
 
                     case 2:
@@ -90,51 +89,22 @@ public class JUPITER
                         break;
 
                     case 3:
-                        Console.WriteLine("Para alterar a senha digite a senha padrão: ");
-                        string lerSenha = Console.ReadLine();
-
-                        if (lerSenha != senha)
-                        {
-                            Console.WriteLine("Senha Incorreta.");
-                            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
-                            Console.ReadKey();
-                            break;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Digite a senha nova:");
-                            string senhaNova1 = Console.ReadLine();
-                            Console.WriteLine("Digite novamente a senha nova:");
-                            string senhaNova2 = Console.ReadLine();
-
-                            if(senhaNova1 == senhaNova2)
-                            {
-                                Console.WriteLine("Senha redefinida com sucesso!");
-                                senha = senhaNova2;
-                                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
-                                Console.ReadKey();
-                            }
-                        }
+                        string senhanova = AlterarSenha(senha);
+                        senha = senhanova;
                         break;
 
                     case 4:
-                        Console.WriteLine("Digite a senha de Administrador: ");
-                        string senhaFecharCaixa = Console.ReadLine();
-                        if (senhaFecharCaixa != senha)
-                        {
-                            Console.WriteLine("Senha Incorreta!");
-                            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
-                            Console.ReadKey();
-                            break;
-                        }
-                        Console.Clear();
-                        Console.WriteLine("Acesso Autorizado! ");
-                        ListarProduto();
-                        Console.WriteLine("Fechando o caixa em 20 segundos...");
-                        System.Threading.Thread.Sleep(20000);
-                        Console.Clear();
-                        Console.WriteLine("Caixa Fechado.");
-                        return;
+
+                        FecharCaixa(senha);
+                        break;
+
+                    default:
+                        Console.WriteLine("Opção não encontrada.");
+                        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+                        Console.ReadKey();
+                        break;
+
+
                 }
             }
         }
@@ -155,17 +125,83 @@ public class JUPITER
         logo += "                33  00    00  00    00 00    00  !!!\n";
         logo += "          3333333   00    00  00    00 00    00  !!!\n";
         logo += "                33  00    00  00    00 00    00  !!!\n";
-        logo += "          33    33  00    00  00    00 00    00     \n";
+        logo += "          33    33  00    00  00    00 00    00  !!!\n";
         logo += "          3333333   00000000  00000000 00000000  !!!\n";
 
         return logo;
     }
+
+    static void FecharCaixa(string senha)
+    {
+        Console.WriteLine("Digite a senha de Administrador: ");
+        string senhaFecharCaixa = Console.ReadLine();
+        if (senhaFecharCaixa == senha)
+        {
+            for (int t = 20; t > 0; t--)
+            {
+                Console.Clear();
+                Console.WriteLine("Acesso Autorizado! ");
+                ListarProduto();
+                Console.WriteLine("Fechando o caixa em ...");
+                Console.WriteLine($"{t} Segundos.");
+                System.Threading.Thread.Sleep(1000);
+            }
+            Console.Clear();
+            Console.WriteLine("Caixa Fechado.");
+            return;
+        }
+        else
+        {
+
+            Console.WriteLine("Senha Incorreta!");
+            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+            Console.ReadKey();
+        }
+        
+
+    }
+
+    static string AlterarSenha(string senha)
+    {
+        Console.WriteLine("Para alterar a senha digite a senha padrão: ");
+        string lerSenha = Console.ReadLine();
+        if (lerSenha != senha)
+        {
+            Console.WriteLine("Senha Incorreta.");
+            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+            Console.ReadKey();
+            return null;
+        }
+        else
+        {
+            Console.WriteLine("Digite a senha nova:");
+            string senhaNova1 = Console.ReadLine();
+            Console.WriteLine("Digite novamente a senha nova:");
+            string senhaNova2 = Console.ReadLine();
+
+            if (senhaNova1 == senhaNova2)
+            {
+                Console.WriteLine("Senha redefinida com sucesso!");
+
+                string senhanova = senhaNova2;
+                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+                Console.ReadKey();
+                return senhanova;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+    }
+
     static void AdicionarProduto(int id, string nome, int quantidade)
     {
         Produto produto = new Produto(id, nome, quantidade);
         listaProdutos.Add(produto);
     }
-    static void VenderProduto(int id)
+    static void VenderProduto()
     {
         Console.WriteLine("Digite o ID do produto a ser vendido: ");
         int idProduto = int.Parse(Console.ReadLine());
@@ -195,16 +231,16 @@ public class JUPITER
     }
     static void ListarProduto()
     {
-        Console.WriteLine("Produtos em estoque: ");   
-        
-        if(listaProdutos.Count == 0)
+        Console.WriteLine("Produtos em estoque: ");
+
+        if (listaProdutos.Count == 0)
             Console.WriteLine("Estoque vazio.");
 
         foreach (var produto in listaProdutos)
         {
             Console.WriteLine($"ID: {produto.Id}. Nome: {produto.Nome}. Quantidade: {produto.Quantidade}. ");
         }
-        
+
     }
 
 }

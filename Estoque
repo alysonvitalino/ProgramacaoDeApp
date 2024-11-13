@@ -103,8 +103,6 @@ public class JUPITER
                         Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
                         Console.ReadKey();
                         break;
-
-
                 }
             }
         }
@@ -157,8 +155,6 @@ public class JUPITER
             Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
             Console.ReadKey();
         }
-        
-
     }
 
     static string AlterarSenha(string senha)
@@ -193,7 +189,6 @@ public class JUPITER
                 return null;
             }
         }
-
     }
 
     static void AdicionarProduto(int id, string nome, int quantidade)
@@ -240,9 +235,7 @@ public class JUPITER
         {
             Console.WriteLine($"ID: {produto.Id}. Nome: {produto.Nome}. Quantidade: {produto.Quantidade}. ");
         }
-
     }
-
 }
 class Produto
 {

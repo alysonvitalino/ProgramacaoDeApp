@@ -1,0 +1,158 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Pilha
+{
+    internal class Program
+    {
+        static async void Main(string[] args)
+        {
+            /*
+             
+            Stack<int> numero = new Stack<int>();
+            numero.Push(1);
+            numero.Push(213);
+            numero.Push(4324);
+            numero.Push(2131);
+            numero.Push(21);
+
+            foreach (int i in numero)
+            {
+                Console.WriteLine(i);
+            }
+
+            
+
+            Stack<string> pilhaNome = new Stack<string>();
+
+            pilhaNome.Push("N");
+            pilhaNome.Push("O");
+            pilhaNome.Push("S");
+            pilhaNome.Push("Y");
+            pilhaNome.Push("L");
+            pilhaNome.Push("A");
+
+            foreach (var nome in pilhaNome)
+            {
+                Console.WriteLine(nome);
+            }
+        
+            Stack<int> pilha = new Stack<int>();
+
+            pilha.Push(6);
+
+            foreach (int numeros in pilha)
+            {
+                Console.WriteLine(numeros);
+            }
+            Console.WriteLine("--------------------");
+
+            pilha.Push(100);
+            pilha.Push(5);
+
+            foreach (int numeros in pilha)
+            {
+                Console.WriteLine(numeros);
+            }
+            Console.WriteLine("--------------------");
+
+            pilha.Push(111);
+
+            foreach (int numeros in pilha)
+            {
+                Console.WriteLine(numeros);
+            }
+            Console.WriteLine("--------------------");
+
+            pilha.Pop();
+
+            foreach (int numeros in pilha)
+            {
+                Console.WriteLine(numeros);
+            }
+            Console.WriteLine("--------------------");
+
+            pilha.Pop();
+            pilha.Pop();
+
+            foreach (int numeros in pilha)
+            {
+                Console.WriteLine(numeros);
+            }
+            Console.WriteLine("--------------------");
+
+            pilha.Push(900);
+
+            foreach (int numeros in pilha)
+            {
+                Console.WriteLine(numeros);
+            }
+            Console.WriteLine("--------------------");
+
+            Console.WriteLine($"O ultimo elemento adicionado é: {pilha.Peek()}");
+
+            for (int i = 0; i < 100; i++) 
+            {
+                Guid guid = Guid.NewGuid();
+                string myGui = guid.ToString().ToUpper();
+                Console.WriteLine(myGui);
+            }
+
+            
+
+            Guid guid = Guid.NewGuid();
+            string myGuid = guid.ToString();
+            Console.WriteLine(myGuid);
+            string[] guidBroke = myGuid.Split('-');
+            Console.WriteLine("--------------------------------------------");
+
+            Stack<string> stack = new Stack<string>();            
+
+            foreach (var item in guidBroke)
+            {
+               stack.Push(item);
+            }
+
+            foreach (var guidlist in stack)
+            {
+                Console.WriteLine(guidlist);
+            }
+
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine($"O ultimo elemento adicionado é: {stack.Peek()}");
+
+
+            //MONTAR UM GUID, QUEBRAR ELE EM PARTES, COLOCAR CADA PARTE DENTRO DA PILHA, IMPRIMIR TODA A PILHA
+            // EM BAIXO IMPRIMIR SEPARADO O ULTIMO VALOR
+
+            
+            List<string> myList = new List<string>();
+
+            for (int i = 0; i < 100000; i++)
+            {
+                string guid1 = Guid.NewGuid().ToString().Split('-')[2]; // [2] SELECIONA O VETOR DE INDICE 3 DA SEPARAÇÃO DO GUID
+                myList.Add(guid1);
+                Console.WriteLine(guid1);
+            }
+
+            bool duplicado = myList.GroupBy(x => x).Any(g => g.Count() > 1);
+            Console.WriteLine(duplicado);
+            */
+
+            int i = 100;
+            while (i > 0)
+            {
+                Thread.Sleep(1000);
+                i--;
+                Console.WriteLine(i.ToString());
+
+                if (i == 50)
+                    break;
+            }
+        }
+    }
+}

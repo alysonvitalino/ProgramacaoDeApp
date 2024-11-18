@@ -75,7 +75,7 @@ public class JUPITER
                 Console.WriteLine("[4] - Fechar Caixa");
 
                 int decisao = Convert.ToInt32(Console.ReadLine());
-                
+
                 switch (decisao)
                 {
                     case 1:
@@ -203,26 +203,33 @@ public class JUPITER
         Produto produto = listaProdutos.Find(x => x.Id == idProduto);
 
         if (produto == null)
-            Console.WriteLine("Produto Não Encontrado.");
-
-        Console.WriteLine($"Produto encontrado: {produto.Nome}. Quantidade Disponível: {produto.Quantidade}.");
-
-        Console.WriteLine("Informe a quantidade a ser vendida: ");
-        int quantidadeVenda = int.Parse(Console.ReadLine());
-
-        if (quantidadeVenda > produto.Quantidade)
         {
-            Console.WriteLine("Quantidade insuficiente no estoque.");
+            Console.WriteLine("Produto Não Encontrado.");
+            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+            Console.ReadKey();
         }
         else
         {
-            Console.Clear();
-            produto.Quantidade -= quantidadeVenda;
-            Console.WriteLine($"Venda realizada com sucesso! {quantidadeVenda} unidade(s) de {produto.Nome} vendidas.");
-            Console.WriteLine($"Quantidade restante em estoque: {produto.Quantidade}.");
+
+            Console.WriteLine($"Produto encontrado: {produto.Nome}. Quantidade Disponível: {produto.Quantidade}.");
+
+            Console.WriteLine("Informe a quantidade a ser vendida: ");
+            int quantidadeVenda = int.Parse(Console.ReadLine());
+
+            if (quantidadeVenda > produto.Quantidade)
+            {
+                Console.WriteLine("Quantidade insuficiente no estoque.");
+            }
+            else
+            {
+                Console.Clear();
+                produto.Quantidade -= quantidadeVenda;
+                Console.WriteLine($"Venda realizada com sucesso! {quantidadeVenda} unidade(s) de {produto.Nome} vendidas.");
+                Console.WriteLine($"Quantidade restante em estoque: {produto.Quantidade}.");
+            }
+            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+            Console.ReadKey();
         }
-        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
-        Console.ReadKey();
     }
     static void ListarProduto()
     {

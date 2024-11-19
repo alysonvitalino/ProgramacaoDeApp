@@ -73,6 +73,7 @@ public class JUPITER
                 Console.WriteLine("[2] - Listar produtos");
                 Console.WriteLine("[3] - Alterar Senha");
                 Console.WriteLine("[4] - Fechar Caixa");
+                Console.WriteLine(senha);
 
                 int decisao = Convert.ToInt32(Console.ReadLine());
 
@@ -84,7 +85,7 @@ public class JUPITER
 
                     case 2:
                         ListarProduto();
-                        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+                        Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
                         Console.ReadKey();
                         break;
 
@@ -100,7 +101,7 @@ public class JUPITER
 
                     default:
                         Console.WriteLine("Opção não encontrada.");
-                        Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+                        Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
                         Console.ReadKey();
                         break;
                 }
@@ -152,7 +153,7 @@ public class JUPITER
         {
 
             Console.WriteLine("Senha Incorreta!");
-            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+            Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
             Console.ReadKey();
         }
     }
@@ -164,9 +165,9 @@ public class JUPITER
         if (lerSenha != senha)
         {
             Console.WriteLine("Senha Incorreta.");
-            Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+            Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
             Console.ReadKey();
-            return null;
+            return senha;
         }
         else
         {
@@ -175,18 +176,24 @@ public class JUPITER
             Console.WriteLine("Digite novamente a senha nova:");
             string senhaNova2 = Console.ReadLine();
 
-            if (senhaNova1 == senhaNova2)
+            if (senhaNova1 != senhaNova2)
+            {
+                Console.WriteLine("Senhas não coincidem.");
+                Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
+                Console.ReadKey();
+
+                return senha;
+
+                
+            }
+            else
             {
                 Console.WriteLine("Senha redefinida com sucesso!");
 
                 string senhanova = senhaNova2;
-                Console.WriteLine("\nPressione qualquer tecla para voltar ao menu...");
+                Console.WriteLine("Pressione qualquer tecla para voltar ao menu...");
                 Console.ReadKey();
                 return senhanova;
-            }
-            else
-            {
-                return null;
             }
         }
     }
